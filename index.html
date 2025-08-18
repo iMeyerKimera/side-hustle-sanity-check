@@ -160,14 +160,43 @@
         .recommendations a { color: var(--primary-color); font-weight: 500; text-decoration: none; }
         .recommendations a:hover { text-decoration: underline; }
 
-        footer {
-            text-align: center;
+        /* NEW STYLES FOR COLLAPSIBLE FOOTER */
+        .footer-accordion {
             margin-top: 2rem;
-            font-size: 0.8rem;
-            opacity: 0.7;
         }
-        footer a { color: var(--text-color); text-decoration: none; margin: 0 0.5rem; }
-        footer a:hover { text-decoration: underline; }
+        .footer-toggle {
+            background: rgba(0,0,0,0.2);
+            padding: 0.75rem 1rem;
+            border-radius: 10px;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+        .footer-toggle .arrow {
+            transition: transform 0.3s ease;
+        }
+        .footer-toggle.active .arrow {
+            transform: rotate(180deg);
+        }
+        .footer-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease, padding 0.3s ease;
+            text-align: center;
+            font-size: 0.9rem;
+        }
+        .footer-content p {
+            margin: 0;
+        }
+        .footer-content a {
+            color: var(--text-color);
+            text-decoration: none;
+            margin: 0 0.5rem;
+        }
+        .footer-content a:hover { text-decoration: underline; }
 
         /* Media Query for larger screens */
         @media (min-width: 640px) {
@@ -250,14 +279,21 @@
                 <small style="opacity: 0.7; text-align: center; display: block;">(These are affiliate links that help support this tool at no cost to you)</small>
             </div>
         </div>
-    </main>
 
-    <footer>
-        <p>
-            <a href="https://www.buymeacoffee.com/mkbuilds" target="_blank">☕ Support This Tool</a> |
-            <a href="mailto:mk.nowbuilds@gmail.com">Feedback</a>
-        </p>
-    </footer>
+        <!-- NEW COLLAPSIBLE FOOTER -->
+        <footer class="footer-accordion">
+            <div class="footer-toggle" onclick="toggleFooter()">
+                <span>Support & Info</span>
+                <i data-feather="chevron-down" class="arrow"></i>
+            </div>
+            <div class="footer-content" id="footerContent">
+                <p style="padding: 1rem 0 0.5rem 0;">
+                    <a href="https://www.buymeacoffee.com/mkbuilds" target="_blank">☕ Support This Tool</a> |
+                    <a href="mailto:mk.nowbuilds@gmail.com">Feedback</a>
+                </p>
+            </div>
+        </footer>
+    </main>
 
     <script>
         // Activate Feather Icons
@@ -300,6 +336,21 @@
             document.getElementById('resultHours').innerText = `${Math.ceil(totalHoursNeeded)} hours`;
 
             resultsDiv.style.display = 'block';
+        }
+
+        // NEW JAVASCRIPT FOR FOOTER ACCORDION
+        function toggleFooter() {
+            const content = document.getElementById('footerContent');
+            const toggle = document.querySelector('.footer-toggle');
+            toggle.classList.toggle('active');
+
+            if (content.style.maxHeight) {
+                content.style.maxHeight = null;
+                content.style.padding = "0";
+            } else {
+                content.style.padding = "1rem 0 0.5rem 0";
+                content.style.maxHeight = content.scrollHeight + "px";
+            }
         }
     </script>
 </body>
