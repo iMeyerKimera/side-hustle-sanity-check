@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Side-Hustle Sanity Check</title>
+    <!-- Google Fonts: Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
+    <!-- Feather Icons for UI -->
+    <script src="https://unpkg.com/feather-icons"></script>
+
+    <style>
+        :root {
+            --background-start: #6D5BBA;
+            --background-end: #8D58BF;
+            --card-background: rgba(255, 255, 255, 0.1);
+            --text-color: #f0f0f0;
+            --primary-color: #A663CC;
+            --input-bg-color: rgba(0, 0, 0, 0.2);
+            --border-color: rgba(255, 255, 255, 0.2);
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, var(--background-start), var(--background-end));
+            color: var(--text-color);
+            margin: 0;
+            padding: 1rem; /* Adjusted padding for mobile */
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            min-height: 100vh;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 600px;
+            background: var(--card-background);
+            backdrop-filter: blur(30px);
+            -webkit-backdrop-filter: blur(30px);
+            border: 1px solid var(--border-color);
+            border-radius: 20px;
+            padding: 1.5rem; /* Adjusted padding for mobile */
+            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        header h1 {
+            font-size: 1.8rem; /* Adjusted font size for mobile */
+            font-weight: 700;
+            margin: 0;
+        }
+
+        header p {
+            opacity: 0.8;
+        }
+
+        .form-grid {
+            display: grid;
+            gap: 1.5rem;
+        }
+
+        .input-group {
+            position: relative;
+        }
+
+        .input-group i {
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            opacity: 0.5;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+        }
+
+        input[type="number"], input[type="range"] {
+            width: 100%;
+            padding: 0.8rem;
+            padding-left: 45px; /* Space for icon */
+            background: var(--input-bg-color);
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            color: var(--text-color);
+            font-size: 1rem;
+            box-sizing: border-box;
+            transition: all 0.2s ease;
+        }
+
+        input[type="number"]::placeholder { color: rgba(255, 255, 255, 0.4); }
+        input[type="number"]:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(166, 99, 204, 0.5);
+        }
+
+        input[type="range"] { padding: 0; }
+
+        button {
+            width: 100%;
+            padding: 1rem;
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 1.1rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .results {
+            margin-top: 2rem;
+            text-align: center;
+            background: rgba(0, 0, 0, 0.2);
+            padding: 1.5rem;
+            border-radius: 15px;
+            display: none; /* Hidden by default */
+        }
+
+        .results h2 { margin-top: 0; font-size: 1.1rem; opacity: 0.8; }
+        .results .highlight {
+            font-size: 2.2rem; /* Adjusted font size for mobile */
+            font-weight: 700;
+            color: #fff;
+            margin: 0.5rem 0;
+        }
+
+        .error-message {
+            color: #ff9a9a;
+            text-align: center;
+            margin-top: 1rem;
+            display: none;
+        }
+
+        .recommendations {
+            margin-top: 2rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid var(--border-color);
+            text-align: left;
+        }
+        .recommendations h4 { margin-top: 0; text-align: center; }
+        .recommendations ul { list-style: none; padding: 0; }
+        .recommendations li { margin-bottom: 0.75rem; }
+        .recommendations a { color: var(--primary-color); font-weight: 500; text-decoration: none; }
+        .recommendations a:hover { text-decoration: underline; }
+
+        footer {
+            text-align: center;
+            margin-top: 2rem;
+            font-size: 0.8rem;
+            opacity: 0.7;
+        }
+        footer a { color: var(--text-color); text-decoration: none; margin: 0 0.5rem; }
+        footer a:hover { text-decoration: underline; }
+
+        /* Media Query for larger screens */
+        @media (min-width: 640px) {
+            body {
+                padding: 2rem;
+            }
+            .container {
+                padding: 2.5rem;
+            }
+            header h1 {
+                font-size: 2.2rem;
+            }
+            .results .highlight {
+                font-size: 2.8rem;
+            }
+        }
+
+    </style>
+</head>
+<body>
+    <main class="container">
+        <header>
+            <h1>Side-Hustle Sanity Check 🧠</h1>
+            <p>Is that gig really worth your time? Let's find out.</p>
+        </header>
+
+        <div class="form-grid">
+            <!-- Core Inputs -->
+            <div class="input-group">
+                <i data-feather="target"></i>
+                <label for="monthlyGoal">Monthly Goal</label>
+                <input type="number" id="monthlyGoal" placeholder="e.g., 500">
+            </div>
+            <div class="input-group">
+                <i data-feather="dollar-sign"></i>
+                <label for="grossRate">Advertised Hourly Rate</label>
+                <input type="number" id="grossRate" placeholder="e.g., 22">
+            </div>
+
+            <!-- Expenses Section -->
+            <fieldset>
+                <legend>Estimated Hourly Expenses</legend>
+                <div class="input-group">
+                    <i data-feather="truck"></i>
+                    <label for="hourlyMileage">Mileage (miles per hour)</label>
+                    <input type="number" id="hourlyMileage" placeholder="e.g., 15" value="0">
+                </div>
+                <div class="input-group">
+                    <i data-feather="tool"></i>
+                    <label for="hourlySupplies">Supplies / Other ($ per hour)</label>
+                    <input type="number" id="hourlySupplies" placeholder="e.g., 2.50" value="0">
+                </div>
+            </fieldset>
+
+            <!-- Tax Section -->
+            <fieldset>
+                <legend>Tax Estimation</legend>
+                <label for="taxRate">Estimated Tax Rate: <span id="taxRateValue">20</span>%</label>
+                <input type="range" id="taxRate" min="0" max="50" value="20" oninput="document.getElementById('taxRateValue').innerText = this.value">
+            </fieldset>
+
+            <button type="button" onclick="calculateSanityCheck()">Calculate Reality</button>
+            <p id="errorMessage" class="error-message">Please fill in your goal and hourly rate.</p>
+        </div>
+
+        <div id="resultsSection" class="results">
+            <h2>Your Estimated Net Hourly Wage</h2>
+            <p class="highlight" id="resultNetWage">$0.00</p>
+            <h2>Hours Needed To Reach Your Goal</h2>
+            <p class="highlight" id="resultHours">0</p>
+
+            <!-- Affiliate/Revenue Section -->
+            <div class="recommendations">
+                <h4>Next Steps & Helpful Tools</h4>
+                <ul>
+                    <li><strong>Track Everything:</strong> Automatically track income, expenses, and mileage with <a href="#" target="_blank">QuickBooks Self-Employed</a>.</li>
+                    <li><strong>Free Mileage Tracker:</strong> A great free option to get started is the <a href="#" target="_blank">Stride App</a>.</li>
+                    <li><strong>Separate Your Finances:</strong> Open a free business checking account like <a href="#" target="_blank">Bluevine</a>.</li>
+                </ul>
+                <small style="opacity: 0.7; text-align: center; display: block;">(These are affiliate links that help support this tool at no cost to you)</small>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <p>
+            <a href="https://www.buymeacoffee.com/mkbuilds" target="_blank">☕ Support This Tool</a> |
+            <a href="mailto:mk.nowbuilds@gmail.com">Feedback</a>
+        </p>
+    </footer>
+
+    <script>
+        // Activate Feather Icons
+        feather.replace();
+
+        function calculateSanityCheck() {
+            const errorMessage = document.getElementById('errorMessage');
+            errorMessage.style.display = 'none'; // Hide error initially
+
+            // 1. Get values from inputs
+            const monthlyGoal = parseFloat(document.getElementById('monthlyGoal').value);
+            const grossRate = parseFloat(document.getElementById('grossRate').value);
+            const hourlyMileage = parseFloat(document.getElementById('hourlyMileage').value) || 0;
+            const hourlySupplies = parseFloat(document.getElementById('hourlySupplies').value) || 0;
+            const taxRate = parseFloat(document.getElementById('taxRate').value) / 100;
+
+            // Simple validation
+            if (isNaN(monthlyGoal) || isNaN(grossRate) || monthlyGoal <= 0 || grossRate <= 0) {
+                errorMessage.style.display = 'block';
+                return;
+            }
+
+            // 2. Define assumptions
+            const costPerMile = 0.67; // IRS Standard Mileage Rate for 2024, a good estimate for gas/wear
+
+            // 3. Perform calculations
+            const mileageCostPerHour = hourlyMileage * costPerMile;
+            const totalHourlyExpenses = mileageCostPerHour + hourlySupplies;
+
+            const grossAfterExpenses = grossRate - totalHourlyExpenses;
+
+            const taxesPerHour = grossAfterExpenses > 0 ? grossAfterExpenses * taxRate : 0;
+            const netHourlyWage = grossAfterExpenses - taxesPerHour;
+
+            const totalHoursNeeded = netHourlyWage > 0 ? monthlyGoal / netHourlyWage : 0;
+
+            // 4. Display the results
+            const resultsDiv = document.getElementById('resultsSection');
+            document.getElementById('resultNetWage').innerText = `$${netHourlyWage.toFixed(2)}`;
+            document.getElementById('resultHours').innerText = `${Math.ceil(totalHoursNeeded)} hours`;
+
+            resultsDiv.style.display = 'block';
+        }
+    </script>
+</body>
+</html>
